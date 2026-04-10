@@ -72,7 +72,7 @@ interface DownloadTooltipProps {
   tech: Technology;
 }
 
-function DownloadTooltip({ tech }: DownloadTooltipProps): JSX.Element {
+function DownloadTooltip({ tech }: DownloadTooltipProps) {
   const [progress, setProgress] = useState<number>(0);
 
   const startAnimation = (): void => {

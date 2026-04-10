@@ -8,27 +8,31 @@ interface Particle {
   offset: number;
 }
 
+interface ColorGradient {
+  start: string;
+  end: string;
+}
 interface FlowLine {
   id: number;
   progress: number;
   speed: number;
-  color: string;
+  color: ColorGradient;
   pathOffset: number;
   particles: Particle[];
 }
 
 const FlowAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
   const linesRef = useRef<FlowLine[]>([]);
   const mousePosRef = useRef<{ x: number; y: number } | null>(null);
 
-  const colors = [
-    { start: '#60a5fa', end: '#a78bfa' }, // Blue to Purple
-    { start: '#c084fc', end: '#f9a8d4' }, // Purple to Pink
-    { start: '#22d3ee', end: '#818cf8' }, // Cyan to Indigo
-    { start: '#f472b6', end: '#c084fc' }, // Pink to Purple
-    { start: '#818cf8', end: '#60a5fa' }, // Indigo to Blue
+  const colors: ColorGradient[] = [
+    { start: '#60a5fa', end: '#a78bfa' },
+    { start: '#c084fc', end: '#f9a8d4' },
+    { start: '#22d3ee', end: '#818cf8' },
+    { start: '#f472b6', end: '#c084fc' },
+    { start: '#818cf8', end: '#60a5fa' },
   ];
 
   const createParticles = (count: number, baseProgress: number): Particle[] => {
@@ -73,10 +77,10 @@ const FlowAnimation: React.FC = () => {
   const getPathPoint = (progress: number, width: number, height: number) => {
     // Normalize progress from 0 to 1 across the screen width
     const x = progress * width;
-    
+
     // Create a bezier curve that starts from left, curves to center, then goes right
     let y: number;
-    
+
     if (progress < 0.3) {
       // Left side - multiple lines spread out
       const t = progress / 0.3;
@@ -93,7 +97,7 @@ const FlowAnimation: React.FC = () => {
 
     // Add subtle wave effect
     const waveY = Math.sin(progress * Math.PI * 4) * 20;
-    
+
     return { x, y: y + waveY };
   };
 
@@ -105,7 +109,7 @@ const FlowAnimation: React.FC = () => {
   ) => {
     const points: { x: number; y: number }[] = [];
     const steps = 100;
-    
+
     // Generate points along the path
     for (let i = 0; i <= steps; i++) {
       const t = i / steps;
@@ -139,13 +143,13 @@ const FlowAnimation: React.FC = () => {
     line.particles.forEach(particle => {
       const particleProgress = (particle.progress + line.progress * 0.5) % 1;
       const point = getPathPoint(particleProgress, width, height);
-      
+
       // Particle glow
       ctx.shadowColor = line.color.end;
       ctx.shadowBlur = 15;
       ctx.beginPath();
       ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
-      
+
       // Particle gradient
       const particleGradient = ctx.createRadialGradient(
         point.x, point.y, 0,
@@ -154,7 +158,7 @@ const FlowAnimation: React.FC = () => {
       particleGradient.addColorStop(0, line.color.end);
       particleGradient.addColorStop(0.5, line.color.start);
       particleGradient.addColorStop(1, 'transparent');
-      
+
       ctx.fillStyle = particleGradient;
       ctx.fill();
 
@@ -222,7 +226,7 @@ const FlowAnimation: React.FC = () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      
+
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
