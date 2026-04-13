@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   });
 
   const text = await res.text();
-   
+   console.log(text)
   return Response.json({
     id: crypto.randomUUID(),
     role: "assistant",
