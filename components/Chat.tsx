@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { GlobeIcon, MessageSquare, X, Sparkles, Brain, Search, Zap } from "lucide-react";
-import AnimatedHeader from "./AnimatedHeader";
+
 
 const models = [
   { id: "gpt-4o", name: "GPT-4o" },
@@ -185,10 +185,20 @@ export default function ChatPage({ onClose }: ChatPageProps) {
     <div className="flex flex-col h-full bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl overflow-hidden">
       {/* Header with Close Button */}
       <div className="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-800/50 backdrop-blur">
-        <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+       
+         <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+        <MessageSquare className="w-5 h-5 text-blue-400 animate-pulse" />
+        <span className="flex items-baseline gap-2">
           
-         <AnimatedHeader onClose={onClose} />
-        </h2>
+          <div className="relative">
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+           ASK ABOUT MURTAZA AFZALI
+            </span>
+           
+            <span className="inline-block w-0.5 h-5 bg-blue-400 ml-0.5 animate-blink"></span>
+          </div>
+        </span>
+      </h2>
         
         {/* Close Button */}
         {onClose && (
