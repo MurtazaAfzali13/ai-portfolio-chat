@@ -1,4 +1,4 @@
-"use client"; // این خط را اضافه کنید
+"use client";
 
 interface LinkItem {
   href: string;
@@ -16,14 +16,15 @@ export default function Footer() {
     <footer className="bg-white/15 backdrop-blur-lg border-t border-white/20 mt-20 relative z-20">
       <div className="container mx-auto py-12 px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand Section */}
+          {/* Brand Section - RAG & AI Engineer */}
           <div className="text-center md:text-left">
             <h3 className="text-3xl font-bold text-white mb-4 drop-shadow-lg">
               Murtaza <span className="text-yellow-300">Afzali</span>
             </h3>
             <p className="text-white/80 leading-relaxed text-lg">
-              Passionate front-end developer creating beautiful, responsive, and user-friendly web applications 
-              with modern technologies.
+              AI Engineer specializing in RAG Architecture, LLM-powered applications, 
+              and intelligent systems using LangChain, LangGraph, FastAPI, Pinecone vector database, 
+              and Vercel AI SDK for semantic search and context-aware Q&A.
             </p>
           </div>
 
@@ -34,7 +35,7 @@ export default function Footer() {
               {([
                 { href: "/", label: "Home" },
                 { href: "/about", label: "About" },
-                { href: "/projects", label: "Projects" },
+                { href: "/projects", label: "AI Projects" },
                 { href: "/contact", label: "Contact" }
               ] as LinkItem[]).map((link) => (
                 <li key={link.href}>
@@ -89,11 +90,11 @@ export default function Footer() {
             </p>
             <div className="flex items-center space-x-2 text-white/60 text-lg">
               <span>Built with</span>
-              <span className="text-red-500 animate-pulse">❤️</span>
+              <span className="text-red-500 animate-pulse">🧠</span>
               <span>using</span>
-              <span className="text-yellow-300 font-semibold">Next.js</span>
+              <span className="text-yellow-300 font-semibold">RAG Architecture</span>
               <span>&</span>
-              <span className="text-cyan-400 font-semibold">Tailwind CSS</span>
+              <span className="text-cyan-400 font-semibold">LLM Stack</span>
             </div>
           </div>
         </div>

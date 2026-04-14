@@ -15,120 +15,119 @@ interface Interest {
 }
 
 interface Skills {
-  frontend: string[];
-  tools: string[];
+  aiStack: string[];
+  backendTools: string[];
 }
 
 export default function AboutContent() {
   const skills: Skills = {
-    frontend: [
-      "React & Next.js",
-      "JavaScript & TypeScript",
-      "HTML5 & CSS3",
-      "Tailwind CSS & Styled Components",
-      "Responsive Design",
-      "State Management (Redux, Zustand)"
+    aiStack: [
+      "RAG Architecture & LLM",
+      "LangChain & LangGraph",
+      "FastAPI & Backend AI",
+      "Pinecone Vector Database",
+      "Vercel AI SDK",
+      "Semantic Search Systems"
     ],
-    tools: [
+    backendTools: [
       "Git & GitHub",
-      "VS Code & DevTools",
-      "Figma & Adobe XD",
-      "Node.js & npm",
-      "Webpack & Vite",
-      "Testing (Jest, React Testing Library)"
+      "Docker & AWS",
+      "PostgreSQL & Supabase",
+      "TypeScript & Python",
+      "API Development",
+      "Testing & Optimization"
     ]
   };
 
   const experiences: Experience[] = [
     {
       period: "2023 - Present",
-      title: "Frontend Developer",
-      company: "Freelance & Personal Projects",
-      description: "Working on various web applications, focusing on React and Next.js development. Building responsive, modern interfaces and optimizing user experiences."
+      title: "AI Engineer & Full-Stack Developer",
+      company: "Freelance & Personal RAG Projects",
+      description: "Designing and implementing RAG architectures, building LLM-powered applications with LangChain and LangGraph, developing FastAPI backends with Pinecone vector database, and integrating Vercel AI SDK for intelligent Q&A systems."
     },
     {
       period: "2022 - 2023",
-      title: "Web Development Learning",
-      company: "Self-Taught Journey",
-      description: "Intensive learning of modern web development technologies, building projects, and contributing to open-source communities."
+      title: "Full-Stack Development Foundation",
+      company: "Self-Taught Journey to AI",
+      description: "Intensive learning of modern web development, transitioning from frontend to full-stack, and building foundation for AI-powered applications and RAG systems."
     }
   ];
 
   const interests: Interest[] = [
     {
-      icon: "🎨",
-      title: "Design",
-      description: "Passionate about UI/UX design and creating visually appealing interfaces"
+      icon: "🧠",
+      title: "AI & RAG",
+      description: "Passionate about building intelligent retrieval-augmented generation systems and LLM applications"
     },
     {
       icon: "📚",
-      title: "Learning",
-      description: "Always exploring new technologies and staying current with industry trends"
+      title: "Research",
+      description: "Always exploring new advancements in semantic search, vector databases, and agent workflows"
     },
     {
       icon: "🌱",
-      title: "Growth",
-      description: "Committed to continuous improvement and helping others grow"
+      title: "Innovation",
+      description: "Committed to creating human-centered AI solutions that transform how people interact with information"
     }
   ];
 
   return (
     <div className="relative z-10 w-full">
-      {/* Hero Section */}
+      {/* Hero Section - AI Engineer */}
       <section className="fade-in mb-16 px-4">
         <div className="mb-8 flex flex-col items-center">
           <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
-            About <span className="text-yellow-300 glow-text">Me</span>
+            About <span className="text-yellow-300 glow-text">AI Engineer</span>
           </h1>
 
           <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
             <span className="pulse-slow font-semibold drop-shadow-lg">
-              Passionate Developer Crafting Digital Experiences
+              RAG Architecture & LLM Specialist
             </span>
           </div>
 
           <p className="text-xl text-white/85 max-w-2xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-            Passionate developer crafting digital experiences that make a difference
+            Building intelligent systems that understand context and deliver precise answers through semantic search
           </p>
         </div>
       </section>
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4">
-        {/* Story Section */}
+        {/* Story Section - RAG Journey */}
         <section className="mb-16 slide-in-left">
           <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-6">My Story</h2>
+            <h2 className="text-3xl font-bold text-white mb-6">My AI Journey</h2>
             <div className="text-white/90 leading-relaxed space-y-4 text-lg">
               <p>
-                Hello! I am Murtaza Afzali, a passionate front-end developer with over 2 years of experience
-                in creating beautiful, responsive, and user-friendly web applications. My journey in web
-                development began with a curiosity about how websites work and has evolved into a deep
-                passion for crafting digital experiences.
+                I am Murtaza Afzali, an AI Engineer specializing in Retrieval-Augmented Generation (RAG) architecture 
+                and Large Language Model applications. My journey began with frontend development and evolved into 
+                building intelligent systems that bridge the gap between human questions and machine understanding.
               </p>
               <p>
-                I specialize in modern JavaScript frameworks, particularly React and Next.js, and I am
-                always excited to learn new technologies and best practices. My goal is to create
-                applications that not only look great but also provide exceptional user experiences.
+                I specialize in end-to-end RAG system design using LangChain for orchestration, LangGraph for agent 
+                workflows, FastAPI for high-performance backends, and Pinecone as vector database. My expertise extends 
+                to implementing semantic search, context-aware Q&A chatbots, and streaming AI responses with Vercel AI SDK.
               </p>
               <p>
-                When I am not coding, you can find me exploring new design trends, contributing to open-source
-                projects, or sharing knowledge with the developer community. I believe in continuous learning
-                and staying up-to-date with the latest industry trends.
+                When I am not building AI systems, I explore new advancements in LLMs, contribute to open-source AI projects, 
+                and research optimal retrieval strategies for better response quality. I believe in creating technology that 
+                fundamentally transforms how people interact with information.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Skills & Expertise */}
+        {/* Skills & Expertise - AI Stack */}
         <section className="mb-16 slide-in-right">
           <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Skills & Expertise</h2>
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">AI & Technical Expertise</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-semibold text-yellow-300 mb-4">Frontend Development</h3>
+                <h3 className="text-xl font-semibold text-yellow-300 mb-4">RAG & LLM Stack</h3>
                 <div className="space-y-3">
-                  {skills.frontend.map((skill, index) => (
+                  {skills.aiStack.map((skill, index) => (
                     <div key={skill} className="flex items-center text-white/90 group hover:bg-white/5 p-3 rounded-lg transition-all duration-300">
                       <span className="w-2 h-2 bg-yellow-300 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
                       {skill}
@@ -137,9 +136,9 @@ export default function AboutContent() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-yellow-300 mb-4">Tools & Technologies</h3>
+                <h3 className="text-xl font-semibold text-yellow-300 mb-4">Development & Infrastructure</h3>
                 <div className="space-y-3">
-                  {skills.tools.map((tool, index) => (
+                  {skills.backendTools.map((tool, index) => (
                     <div key={tool} className="flex items-center text-white/90 group hover:bg-white/5 p-3 rounded-lg transition-all duration-300">
                       <span className="w-2 h-2 bg-yellow-300 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></span>
                       {tool}
@@ -151,10 +150,10 @@ export default function AboutContent() {
           </div>
         </section>
 
-        {/* Experience Timeline */}
+        {/* Experience Timeline - RAG Focus */}
         <section className="mb-16 fade-in">
           <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Experience Timeline</h2>
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">RAG Development Journey</h2>
             <div className="space-y-8">
               {experiences.map((exp, index) => (
                 <div key={index} className="flex flex-col md:flex-row items-start md:items-center group hover:bg-white/5 p-6 rounded-xl transition-all duration-300">
@@ -176,7 +175,7 @@ export default function AboutContent() {
           </div>
         </section>
 
-        {/* Personal Interests */}
+        {/* Personal Interests - AI Focused */}
         <section className="mb-16 slide-in-left">
           <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
             <h2 className="text-3xl font-bold text-white mb-8 text-center">Beyond Code</h2>
@@ -198,19 +197,19 @@ export default function AboutContent() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* Call to Action - RAG Projects */}
         <section className="text-center fade-in">
           <div className="bg-gradient-to-r from-blue-500/30 to-purple-600/30 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-4">Let us Work Together</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Build Intelligent RAG Systems</h2>
             <p className="text-white/80 mb-6 text-lg">
-              I am always interested in new opportunities and exciting projects.
-              Let us discuss how we can bring your ideas to life!
+              I am always interested in challenging AI projects and RAG implementations.
+              Let us discuss how we can bring intelligent Q&A systems to life!
             </p>
             <a
               href="/contact"
               className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
             >
-              Get In Touch
+              Start an AI Project
             </a>
           </div>
         </section>

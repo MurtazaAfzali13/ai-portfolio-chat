@@ -1,20 +1,25 @@
+// app/api/chat/route.ts
 export async function POST(req: Request) {
   const body = await req.json();
-    console.log("🔥 API ROUTE HIT");
+  console.log("🔥 API ROUTE HIT - STREAMING MODE");
 
-  const res = await fetch("http://127.0.0.1:8000/chat", {
+  // استفاده از endpoint استریم
+  const response = await fetch("http://127.0.0.1:8000/chat/stream", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      question: body.messages[body.messages.length - 1].content,
+      model: body.model,
+      webSearch: body.webSearch,
+    }),
   });
 
-  const text = await res.text();
-   console.log(text)
-  return Response.json({
-    id: crypto.randomUUID(),
-    role: "assistant",
-    content: text,
+  // برگردوندن استریم به کلاینت
+  return new Response(response.body, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
   });
 }

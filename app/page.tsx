@@ -28,7 +28,7 @@ export default function HomePage() {
               <Link href="/image">
                 <Image
                   src="/images/picture.jpg"
-                  alt="Murtaza Afzali"
+                  alt="Murtaza Afzali - AI Engineer"
                   className="w-full h-full object-cover"
                   width={200}
                   height={200}
@@ -48,14 +48,14 @@ export default function HomePage() {
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
-                Front-End Developer
+                AI Engineer & RAG Specialist
               </span>
             </div>
 
             <p className="text-xl text-white/85 max-w-2xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-              Passionate about creating beautiful, responsive, and user-friendly
-              web applications using modern technologies like React, Next.js,
-              and Tailwind CSS.
+              Specializing in RAG Architecture, LLM-powered applications, and semantic search systems.
+              Building intelligent Q&A platforms using LangChain, LangGraph, FastAPI, Pinecone vector database,
+              and Vercel AI SDK.
             </p>
           </div>
 
@@ -64,13 +64,13 @@ export default function HomePage() {
               href="/projects"
               className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 backdrop-blur-lg border border-white/20 hover:from-blue-600 hover:to-purple-700 transform hover:scale-105"
             >
-              View My Projects
+              View AI Projects
             </a>
             <a
               href="/contact"
               className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105"
             >
-              Get In Touch
+              Start RAG Project
             </a>
           </div>
         </section>
@@ -79,20 +79,20 @@ export default function HomePage() {
           <Technologies />
         </div>
 
-        {/* Quick Stats */}
+        {/* Quick Stats - AI Focused */}
         <section className="w-full max-w-4xl mx-auto mb-16 fade-in px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 text-center hover-lift border border-white/20 shadow-xl transition-all duration-300 hover:bg-white/25">
               <div className="text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg">
                 2+
               </div>
-              <div className="text-white font-semibold">Years Experience</div>
+              <div className="text-white font-semibold">Years in AI & RAG</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 text-center hover-lift border border-white/20 shadow-xl transition-all duration-300 hover:bg-white/25">
               <div className="text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg">
                 15+
               </div>
-              <div className="text-white font-semibold">Projects Completed</div>
+              <div className="text-white font-semibold">AI Projects Built</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 text-center hover-lift border border-white/20 shadow-xl transition-all duration-300 hover:bg-white/25">
               <div className="text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg">
@@ -103,20 +103,20 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* Call to Action - RAG Systems */}
         <section className="text-center fade-in px-4">
           <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
-            Ready to work together?
+            Ready to Build Your RAG System?
           </h3>
           <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
-            Let us create something amazing!
+            Let's create intelligent semantic search and Q&A experiences!
           </p>
           <br />
           <a
             href="/contact"
             className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
           >
-            Start a Project
+            Start an AI Project
           </a>
 
         </section>

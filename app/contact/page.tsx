@@ -13,20 +13,20 @@ interface FAQ {
 export default function ContactPage() {
   const faqs: FAQ[] = [
     {
-      question: "What's your typical project timeline?",
-      answer: "Project timelines vary based on complexity. Simple websites take 1-2 weeks, while complex applications can take 2-3 months. I'll provide a detailed timeline after discussing your requirements."
+      question: "How long does it take to build a RAG system?",
+      answer: "RAG system development timelines vary based on complexity. Basic semantic search implementation takes 2-3 weeks, while full RAG pipelines with custom agents can take 1-2 months. I'll provide a detailed timeline after discussing your requirements."
     },
     {
-      question: "Do you work with international clients?",
-      answer: "Absolutely! I work with clients worldwide. I'm comfortable with different time zones and can accommodate various communication preferences."
+      question: "Do you work with international AI projects?",
+      answer: "Absolutely! I work with clients worldwide on RAG architectures, LLM applications, and intelligent Q&A systems. I'm comfortable with different time zones and various communication preferences."
     },
     {
-      question: "What's included in your services?",
-      answer: "I provide full-stack development, UI/UX design, testing, deployment, and ongoing support. Each project includes source code, documentation, and training if needed."
+      question: "What's included in your AI development services?",
+      answer: "I provide end-to-end RAG architecture design, FastAPI backend development, Pinecone vector database integration, LangChain/LangGraph workflow implementation, Vercel AI SDK frontend integration, testing, deployment, and documentation."
     },
     {
-      question: "How do you handle project revisions?",
-      answer: "I include reasonable revisions in my quotes. I believe in iterative development and regular feedback to ensure the final product meets your expectations."
+      question: "How do you handle RAG system optimizations?",
+      answer: "I include reasonable revisions for prompt engineering, chunking strategies, retrieval tuning, and response quality improvements. I believe in iterative development based on user feedback to optimize the RAG pipeline."
     }
   ];
 
@@ -37,21 +37,21 @@ export default function ContactPage() {
 
       {/* محتوای اصلی */}
       <div className="relative z-10 w-full">
-        {/* Hero Section */}
+        {/* Hero Section - RAG Consultation */}
         <section className="fade-in mb-16 px-4">
           <div className="mb-8 flex flex-col items-center">
             <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
-              Get In <span className="text-yellow-300 glow-text">Touch</span>
+              Start Your <span className="text-yellow-300 glow-text">RAG Project</span>
             </h1>
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
-                Let&apos;s Create Something Amazing
+                Build Intelligent LLM Applications
               </span>
             </div>
 
             <p className="text-xl text-white/85 max-w-2xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-              Ready to start your next project? Let&apos;s discuss how we can bring your ideas to life!
+              Ready to implement semantic search and context-aware Q&A systems? Let's discuss how RAG architecture can transform your data into intelligent conversations!
             </p>
           </div>
         </section>
@@ -67,10 +67,10 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* FAQ Section */}
+          {/* FAQ Section - RAG Focused */}
           <section className="fade-in mb-16">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-              <h2 className="text-3xl font-bold text-white mb-8 text-center">Frequently Asked Questions</h2>
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">RAG System FAQs</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 {faqs.map((faq, index) => (
                   <div key={index} className="group hover:bg-white/5 p-6 rounded-xl transition-all duration-300">
@@ -86,20 +86,20 @@ export default function ContactPage() {
             </div>
           </section>
 
-          {/* Call to Action */}
+          {/* Call to Action - AI Projects */}
           <section className="text-center fade-in">
             <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
-              Ready to start your project?
+              Ready to Build Your RAG System?
             </h3>
             <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
-              Let&apos;s create something amazing together!
+              Let's create intelligent Q&A experiences with semantic search!
             </p>
             <br />
             <a
               href="/projects"
               className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
             >
-              View My Projects
+              View AI Projects
             </a>
           </section>
         </div>

@@ -32,32 +32,32 @@ export default function ProjectsList() {
         const res = await fetch("/api/projects");
         const data: Project[] = await res.json();
         setProjects(data);
-        console.log("API data:", data);
-        console.log("Is Array?", Array.isArray(data));
+        console.log("RAG-based projects fetched:", data);
+        console.log("Semantic search ready:", Array.isArray(data));
 
-        // تنظیم پروژه ویژه (اولین پروژه یا یک پروژه خاص)
+        // تنظیم پروژه ویژه با استفاده از معماری RAG
         if (data.length > 0) {
           setFeaturedProject(data[0]);
         }
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error("Error fetching from LangChain backend:", error);
       }
     }
 
     fetchProjects();
   }, []);
 
-  // داده‌های ثابت برای تکنولوژی‌ها
+  // تکنولوژی‌های هوشمند مبتنی بر RAG و LLM
   const technologies: Technology[] = [
-    { name: "React", icon: "⚛️" },
-    { name: "Next.js", icon: "▲" },
-    { name: "TypeScript", icon: "🔷" },
-    { name: "AWS", icon: "☁️" },
-    { name: "Docker", icon: "🐳" },
-    { name: "Redis", icon: "🔴" },
-    { name: "GraphQL", icon: "🔺" },
-    { name: "Jest", icon: "🧪" },
-    { name: "Cypress", icon: "🌲" }
+    { name: "LangChain", icon: "⛓️" },
+    { name: "LangGraph", icon: "🕸️" },
+    { name: "FastAPI", icon: "⚡" },
+    { name: "Pinecone", icon: "🌲" },
+    { name: "Vercel AI SDK", icon: "🤖" },
+    { name: "RAG Architecture", icon: "📚" },
+    { name: "LLM", icon: "🧠" },
+    { name: "Semantic Search", icon: "🔍" },
+    { name: "Vector Database", icon: "📊" }
   ];
 
   if (projects.length === 0) {
@@ -80,27 +80,28 @@ export default function ProjectsList() {
 
   return (
     <div className="relative z-10 w-full">
-      {/* Hero Section */}
+      {/* Hero Section - RAG-based Intelligent Systems */}
       <section className="fade-in mb-16 px-4">
         <div className="mb-8 flex flex-col items-center">
           <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
-            My <span className="text-yellow-300 glow-text">Projects</span>
+            AI <span className="text-yellow-300 glow-text">Intelligent Projects</span>
           </h1>
 
           <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
             <span className="pulse-slow font-semibold drop-shadow-lg">
-              Innovative Web Applications
+              RAG-Powered & LLM-Driven Applications
             </span>
           </div>
 
           <p className="text-xl text-white/85 max-w-3xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-            A collection of projects that showcase my skills and passion for creating
-            innovative web applications
+            A collection of projects built with Retrieval-Augmented Generation (RAG) architecture,
+            Large Language Models, and modern AI infrastructure including LangChain, LangGraph,
+            FastAPI, Pinecone vector database, and Vercel AI SDK for intelligent Q&A systems.
           </p>
         </div>
       </section>
 
-      {/* Projects Grid */}
+      {/* Projects Grid - AI-Powered Solutions */}
       <section className="max-w-7xl mx-auto px-4 mb-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
@@ -122,11 +123,11 @@ export default function ProjectsList() {
         </div>
       </section>
 
-      {/* Featured Project Section */}
+      {/* Featured Project Section - RAG Architecture Showcase */}
       {featuredProject && (
         <section className="max-w-6xl mx-auto px-4 mb-16 slide-in-left">
           <div className="bg-gradient-to-r from-blue-500/30 to-purple-600/30 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-6 text-center">Featured Project</h2>
+            <h2 className="text-3xl font-bold text-white mb-6 text-center">Featured RAG System</h2>
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <h3 className="text-2xl font-bold text-yellow-300 mb-4">{featuredProject.title}</h3>
@@ -151,7 +152,7 @@ export default function ProjectsList() {
                       rel="noopener noreferrer"
                       className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 backdrop-blur-lg border border-white/20 shadow-2xl hover-lift"
                     >
-                      View Live Demo
+                      Live Demo
                     </a>
                   )}
                   {featuredProject.githubUrl && (
@@ -174,7 +175,7 @@ export default function ProjectsList() {
                     className="w-full h-full object-cover rounded-2xl"
                   />
                 ) : (
-                  <span className="text-8xl opacity-50">🚀</span>
+                  <span className="text-8xl opacity-50">🧠</span>
                 )}
               </div>
             </div>
@@ -182,10 +183,10 @@ export default function ProjectsList() {
         </section>
       )}
 
-      {/* Skills Showcase */}
+      {/* Skills Showcase - AI Stack */}
       <section className="max-w-6xl mx-auto px-4 mb-16 slide-in-right">
         <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Technologies Used</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">AI & RAG Technology Stack</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {technologies.map((tech, index) => (
               <div
@@ -204,19 +205,19 @@ export default function ProjectsList() {
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Call to Action - Build Intelligent Systems */}
       <section className="text-center fade-in px-4">
         <div className="bg-gradient-to-r from-green-500/30 to-blue-600/30 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-          <h2 className="text-3xl font-bold text-white mb-4">Interested in Working Together?</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Build Intelligent RAG Systems Together</h2>
           <p className="text-white/80 mb-6 text-lg">
-            I&apos;m always excited to take on new challenges and create amazing digital experiences.
-            Let&apos;s discuss your next project!
+            Let's create next-generation AI applications with semantic search, context-aware Q&A,
+            and LLM-powered experiences using LangChain, LangGraph, FastAPI, and Pinecone.
           </p>
           <a
             href="/contact"
             className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
           >
-            Start a Project
+            Start an AI Project
           </a>
         </div>
       </section>

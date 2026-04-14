@@ -1,306 +1,352 @@
+// components/Chat.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { GlobeIcon, MessageSquare, X } from "lucide-react";
+import { GlobeIcon, MessageSquare, X, Sparkles, Brain, Search, Zap } from "lucide-react";
+import AnimatedHeader from "./AnimatedHeader";
 
 const models = [
   { id: "gpt-4o", name: "GPT-4o" },
   { id: "gpt-3.5-mini", name: "GPT-3.5 Mini" },
 ];
 
-type Msg = {
+type Message = {
   id: string;
   role: "user" | "assistant";
   content: string;
 };
 
-/* ✅ استخراج متن از هر نوع پاسخ API */
-function extractText(data: any): string {
-  if (!data) return "";
+// Helper function to detect if text is Persian/Arabic
+const isRTL = (text: string): boolean => {
+  const rtlRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  return rtlRegex.test(text);
+};
 
-  if (typeof data === "string") return data;
+// Helper to get text direction
+const getTextDirection = (text: string): "rtl" | "ltr" => {
+  return isRTL(text) ? "rtl" : "ltr";
+};
 
-  if (data.content) return data.content;
+// Message Bubble Component with auto RTL/LTR
+const MessageBubble = ({ content, isUser }: { content: string; isUser: boolean }) => {
+  const textDir = getTextDirection(content);
+  
+  return (
+    <div
+      className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+        isUser
+          ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white"
+          : "bg-slate-700/50 backdrop-blur text-slate-100 border border-slate-600"
+      }`}
+    >
+      <p 
+        className="whitespace-pre-wrap break-words"
+        dir={textDir}
+        style={{ textAlign: textDir === "rtl" ? "right" : "left" }}
+      >
+        {content}
+      </p>
+    </div>
+  );
+};
 
-  if (data?.choices?.[0]?.message?.content) {
-    return data.choices[0].message.content;
-  }
-
-  return "⚠️ No valid response";
+interface ChatPageProps {
+  onClose?: () => void;
 }
 
-export default function ChatPage() {
-  const [messages, setMessages] = useState<Msg[]>([]);
-  const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
+export default function ChatPage({ onClose }: ChatPageProps) {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [model, setModel] = useState(models[0].id);
   const [useWebSearch, setUseWebSearch] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true); // true برای نمایش مستقیم چت
+  const [streamingContent, setStreamingContent] = useState("");
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  /* ✅ متن‌های داینامیک برای loading */
-  const loadingSteps = [
-    "🧠 در حال درک سوال...",
-    "🔍 در حال تحلیل اطلاعات...",
-    "⚡ در حال ساخت پاسخ...",
-    "✨ تقریباً آماده است...",
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  
+  // Auto scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, streamingContent]);
+  
+  // Auto focus input on mount
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+  
+  // Loading messages for streaming (Persian)
+  const loadingMessages = [
+    { icon: <Brain className="w-4 h-4" />, text: "Analyzing your question..." },
+    { icon: <Search className="w-4 h-4" />, text: "Searching my knowledge..." },
+    { icon: <Sparkles className="w-4 h-4" />, text: "Crafting the best answer..." },
+    { icon: <Zap className="w-4 h-4" />, text: "Finalizing response..." },
   ];
-
-  const [loadingText, setLoadingText] = useState(loadingSteps[0]);
-
+  
+  const [loadingIndex, setLoadingIndex] = useState(0);
+  
+  // Rotate loading messages
   useEffect(() => {
-    if (!loading) return;
-
-    let i = 0;
+    if (!isLoading) return;
+    
     const interval = setInterval(() => {
-      i = (i + 1) % loadingSteps.length;
-      setLoadingText(loadingSteps[i]);
-    }, 1200);
-
+      setLoadingIndex((prev) => (prev + 1) % loadingMessages.length);
+    }, 1500);
+    
     return () => clearInterval(interval);
-  }, [loading]);
-
-  // ✅ اسکرول خودکار به پایین هنگام دریافت پیام جدید
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ 
-        behavior: "smooth", 
-        block: "end" 
-      });
-    }
-  }, [messages]); // فقط وقتی messages تغییر می‌کند اسکرول شود
-
+  }, [isLoading]);
+  
   const handleSubmit = async () => {
-    const content = text.trim();
-    if (!content || loading) return;
-
-    // پیام کاربر
-    const userMessage: Msg = {
+    if (!input.trim() || isLoading) return;
+    
+    // Add user message
+    const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content,
+      content: input,
     };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setText("");
-    setLoading(true);
-
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+    setStreamingContent("");
+    
+    // Create AbortController for cancel functionality
+    abortControllerRef.current = new AbortController();
+    
     try {
-      const res = await fetch("/api/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content }],
-          model,
+          messages: [...messages, userMessage].map(m => ({
+            role: m.role,
+            content: m.content,
+          })),
+          model: model,
           webSearch: useWebSearch,
         }),
+        signal: abortControllerRef.current.signal,
       });
-
-      const data = await res.json();
       
-      console.log("API Response:", data); // برای دیباگ
-
-      const assistantMessage: Msg = {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        content: extractText(data),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (err: any) {
-      console.error("Error:", err);
-      setMessages((prev) => [
-        ...prev,
-        {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      
+      let accumulatedContent = "";
+      
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          const chunk = decoder.decode(value);
+          accumulatedContent += chunk;
+          setStreamingContent(accumulatedContent);
+        }
+      }
+      
+      // After stream ends, add final message to list
+      if (accumulatedContent) {
+        setMessages(prev => [...prev, {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: "❌ Error: " + err.message,
-        },
-      ]);
+          content: accumulatedContent,
+        }]);
+      }
+      
+    } catch (error: any) {
+      if (error.name !== 'AbortError') {
+        console.error("Error:", error);
+        setMessages(prev => [...prev, {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: `❌ Error: ${error.message || "Connection problem occurred"}`,
+        }]);
+      }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
+      setStreamingContent("");
+      abortControllerRef.current = null;
     }
   };
-
+  
+  const handleCancel = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setIsLoading(false);
+      setStreamingContent("");
+    }
+  };
+  
   return (
-    <>
-      {/* دکمه باز کردن Modal - اگر می‌خواهید مستقیم چت باز شود می‌توانید این را حذف کنید */}
-      {!isModalOpen && (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="flex flex-col h-full bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl overflow-hidden">
+      {/* Header with Close Button */}
+      <div className="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-800/50 backdrop-blur">
+        <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+          
+         <AnimatedHeader onClose={onClose} />
+        </h2>
+        
+        {/* Close Button */}
+        {onClose && (
           <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-lg"
+            onClick={onClose}
+            className="p-2 hover:bg-slate-700 rounded-lg transition-colors group"
+            aria-label="Close chat"
           >
-            Open Chat
+            <X className="w-5 h-5 text-gray-400 group-hover:text-white transition" />
           </button>
-        </div>
-      )}
-
-      {/* Modal با عرض افزایش یافته */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div 
-            className="bg-slate-800 rounded-xl shadow-2xl flex flex-col relative"
-            style={{ 
-              width: "calc(100% + 100px)", // افزایش عرض به اندازه 100px
-              maxWidth: "900px", 
-              height: "80vh",
-              minHeight: "500px"
-            }}
-          >
-            {/* هدر Modal */}
-            <div className="flex justify-between items-center p-4 border-b border-slate-700">
-              <h2 className="text-xl font-semibold text-gray-100">Chat Assistant</h2>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="p-1 hover:bg-slate-700 rounded-lg transition-colors"
-              >
-                <X size={20} className="text-gray-400" />
-              </button>
+        )}
+      </div>
+      
+      {/* Messages Container */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {messages.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full text-center">
+            <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full p-6 mb-4">
+              <MessageSquare className="w-12 h-12 text-blue-400" />
             </div>
-
-            {/* محتوای Chat */}
-            <div className="flex-1 flex flex-col p-4 overflow-hidden">
-              {/* Messages Container */}
-              <div 
-                ref={chatContainerRef}
-                className="flex-1 overflow-y-auto mb-4 flex flex-col gap-3"
+            <h3 className="text-xl font-semibold text-white mb-2">Welcome to Smart Assistant</h3>
+            <p className="text-slate-400 max-w-md">
+              Ask me anything! I'm here to help you.
+            </p>
+          </div>
+        )}
+        
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+          >
+            <MessageBubble 
+              content={message.content} 
+              isUser={message.role === "user"} 
+            />
+          </div>
+        ))}
+        
+        {/* Streaming message */}
+        {streamingContent && (
+          <div className="flex justify-start">
+            <div className="max-w-[80%] rounded-2xl px-4 py-2 bg-slate-700/50 backdrop-blur text-slate-100 border border-slate-600">
+              <p 
+                className="whitespace-pre-wrap break-words"
+                dir={getTextDirection(streamingContent)}
+                style={{ textAlign: getTextDirection(streamingContent) === "rtl" ? "right" : "left" }}
               >
-                {messages.length === 0 && (
-                  <div className="flex flex-col items-center justify-center flex-1 text-gray-300">
-                    <MessageSquare size={48} className="mb-4" />
-                    <h2 className="text-xl font-semibold mb-1">
-                      شروع مکالمه
-                    </h2>
-                    <p className="text-gray-400">
-                      پیام خود را بنویسید...
-                    </p>
-                  </div>
-                )}
-
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex ${
-                      msg.role === "user"
-                        ? "justify-end"
-                        : "justify-start"
-                    }`}
-                  >
-                    <div
-                      className={`p-3 rounded-lg max-w-[70%] whitespace-pre-wrap break-words ${
-                        msg.role === "user"
-                          ? "bg-blue-600 text-white"
-                          : "bg-slate-700 text-gray-100"
-                      }`}
-                    >
-                      {msg.content}
-                    </div>
-                  </div>
-                ))}
-
-                {/* ✅ لودینگ حرفه‌ای */}
-                {loading && (
-                  <div className="flex justify-start">
-                    <div className="bg-slate-700 p-3 rounded-lg">
-                      <div className="text-gray-300 text-sm animate-pulse">
-                        {loadingText}
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                {/* عنصر خالی برای اسکرول خودکار */}
-                <div ref={messagesEndRef} />
-              </div>
-
-              {/* Input Area */}
-              <div className="flex flex-col gap-2 border-t border-slate-700 pt-4">
-                <textarea
-                  className="w-full p-3 bg-slate-700 border border-slate-600 text-gray-100 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="پیام خود را بنویسید..."
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  rows={3}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSubmit();
-                    }
-                  }}
-                />
-
-                <div className="flex justify-between items-center">
-                  {/* Controls */}
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setUseWebSearch(!useWebSearch)}
-                      className={`flex items-center gap-1 px-3 py-1 rounded-lg border transition ${
-                        useWebSearch
-                          ? "bg-blue-600 text-white border-blue-600"
-                          : "bg-slate-700 text-gray-200 border-slate-600 hover:bg-slate-600"
-                      }`}
-                    >
-                      <GlobeIcon size={16} />
-                      جستجو
-                    </button>
-
-                    <select
-                      value={model}
-                      onChange={(e) => setModel(e.target.value)}
-                      className="bg-slate-700 border border-slate-600 text-gray-100 rounded-lg px-3 py-1"
-                    >
-                      {models.map((m) => (
-                        <option key={m.id} value={m.id}>
-                          {m.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Send Button */}
-                  <button
-                    onClick={handleSubmit}
-                    disabled={!text.trim() || loading}
-                    className={`px-4 py-2 rounded-lg font-semibold transition ${
-                      !text.trim() || loading
-                        ? "bg-slate-600 text-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
-                  >
-                    {loading ? "در حال ارسال..." : "ارسال"}
-                  </button>
+                {streamingContent}
+                <span className="inline-block w-0.5 h-5 bg-blue-400 ml-1 animate-blink" />
+              </p>
+            </div>
+          </div>
+        )}
+        
+        {/* Loading indicator - before stream starts */}
+        {isLoading && !streamingContent && (
+          <div className="flex justify-start">
+            <div className="bg-slate-700/50 backdrop-blur rounded-2xl px-4 py-3 border border-slate-600">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-400 border-t-transparent"></div>
+                </div>
+                <div className="flex items-center gap-2 text-slate-200">
+                  {loadingMessages[loadingIndex].icon}
+                  <span className="text-sm">{loadingMessages[loadingIndex].text}</span>
                 </div>
               </div>
             </div>
           </div>
+        )}
+        
+        <div ref={messagesEndRef} />
+      </div>
+      
+      {/* Input Area */}
+      <div className="border-t border-slate-700 bg-slate-800/50 backdrop-blur p-4">
+        <div className="flex flex-col gap-3">
+          <textarea
+            ref={inputRef}
+            className="w-full p-3 bg-slate-700 border border-slate-600 text-white rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            placeholder="Type your message... (Enter to send, Shift+Enter for new line)"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={2}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }}
+            dir="auto"
+          />
+          
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setUseWebSearch(!useWebSearch)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition ${
+                  useWebSearch
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                }`}
+              >
+                <GlobeIcon size={14} />
+                Web Search
+              </button>
+              
+              <select
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+                className="bg-slate-700 border border-slate-600 text-white rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {models.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="flex gap-2">
+              {isLoading && (
+                <button
+                  onClick={handleCancel}
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+                >
+                  Cancel
+                </button>
+              )}
+              <button
+                onClick={handleSubmit}
+                disabled={!input.trim() || isLoading}
+                className={`px-4 py-2 rounded-lg font-semibold transition ${
+                  !input.trim() || isLoading
+                    ? "bg-slate-600 text-slate-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600"
+                }`}
+              >
+                {isLoading ? "Sending..." : "Send"}
+              </button>
+            </div>
+          </div>
         </div>
-      )}
-
-      {/* استایل‌های انیمیشن */}
+      </div>
+      
       <style jsx global>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
-        .animate-in {
-          animation: fade-in 0.2s ease-out;
+        .animate-blink {
+          animation: blink 1s step-end infinite;
         }
         
-        /* اسکرولبار سفارشی */
         .overflow-y-auto::-webkit-scrollbar {
-          width: 8px;
+          width: 6px;
         }
         
         .overflow-y-auto::-webkit-scrollbar-track {
@@ -317,6 +363,6 @@ export default function ChatPage() {
           background: #64748b;
         }
       `}</style>
-    </>
+    </div>
   );
 }
