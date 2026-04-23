@@ -27,7 +27,7 @@ export default function HomePage() {
             <div className="w-60 h-60 mb-6 rounded-full overflow-hidden border-4 border-yellow-300 shadow-2xl backdrop-blur-lg bg-white/20">
               <Link href="/image">
                 <Image
-                  src="/images/picture.jpg"
+                  src="/images/murtazaafzali.jpg"
                   alt="Murtaza Afzali - AI Engineer"
                   className="w-full h-full object-cover"
                   width={200}
@@ -41,7 +41,7 @@ export default function HomePage() {
             <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
               Hi, I am{" "}
               <span className="text-yellow-300 glow-text">
-                Murtaza Afzali
+                Murtaza 
               </span>
             </h1>
 
