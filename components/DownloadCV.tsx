@@ -5,7 +5,7 @@ export default function DownloadCV() {
     <button
       onClick={() => {
         const a = document.createElement("a");
-        a.href = "/MurtazaAfzali1.pdf";
+        a.href = "/Murtaza_Afzali.pdf";
         a.download = "My-CV.pdf";
         a.click();
       }}

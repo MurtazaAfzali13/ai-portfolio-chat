@@ -1,11 +1,13 @@
 // app/page.tsx
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Technologies from "@/components/Technologies";
 import DownloadCV from "@/components/DownloadCV";
+import CVModal from "@/components/CVModal";
 
 const SpaceBackground = dynamic(
   () => import("@/components/SpaceBackground"),
@@ -13,6 +15,8 @@ const SpaceBackground = dynamic(
 );
 
 export default function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
       {/* استفاده از کامپوننت بک‌گراند */}
@@ -41,10 +45,9 @@ export default function HomePage() {
             <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
               Hi, I am{" "}
               <span className="text-yellow-300 glow-text">
-                Murtaza 
+                Murtaza Afzali
               </span>
             </h1>
-
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
@@ -66,12 +69,12 @@ export default function HomePage() {
             >
               View AI Projects
             </a>
-            <a
-              href="/contact"
+            <button
+              onClick={() => setIsModalOpen(true)}
               className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105"
             >
               Start RAG Project
-            </a>
+            </button>
           </div>
         </section>
 
@@ -103,7 +106,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Call to Action - RAG Systems */}
+        {/* Call to Action - View Resume */}
         <section className="text-center fade-in px-4">
           <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
             Ready to Build Your RAG System?
@@ -112,18 +115,21 @@ export default function HomePage() {
             Let's create intelligent semantic search and Q&A experiences!
           </p>
           <br />
-          <a
-            href="/contact"
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
           >
-            Start an AI Project
-          </a>
-
+            📄 View Resume
+          </button>
         </section>
+        
         <div className="m-4 cursor-pointer">
           <DownloadCV />
         </div>
       </div>
+
+      {/* Modal برای نمایش رزومه */}
+      <CVModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <style jsx>{`
         .glow-text {
