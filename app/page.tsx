@@ -18,7 +18,7 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
+    <div className="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden pt-20">
       {/* استفاده از کامپوننت بک‌گراند */}
       <SpaceBackground />
 
@@ -31,7 +31,7 @@ export default function HomePage() {
             <div className="w-60 h-60 mb-6 rounded-full overflow-hidden border-4 border-yellow-300 shadow-2xl backdrop-blur-lg bg-white/20">
               <Link href="/image">
                 <Image
-                  src="/images/murtazaafzali.jpg"
+                  src="/images/murtaza.jpg"
                   alt="Murtaza Afzali - AI Engineer"
                   className="w-full h-full object-cover"
                   width={200}
@@ -71,7 +71,7 @@ export default function HomePage() {
             </a>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105"
+              className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105 cursor-pointer"
             >
               Start RAG Project
             </button>

@@ -7,11 +7,18 @@ export const metadata = {
   description: "Personal portfolio built with Next.js and Tailwind",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
         {children}
+        {modal}
         <Header />
         <ChatModal />
         <Footer />

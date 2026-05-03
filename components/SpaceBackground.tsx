@@ -39,7 +39,6 @@ interface PlanetType {
 
 export default function SpaceBackground(){
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const moonImageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,7 +47,6 @@ export default function SpaceBackground(){
     const ctx = canvas.getContext("2d");
     let stars: Star[] = [];
     let planets: Planet[] = [];
-    let moonImg = new Image();
     
     // تنظیمات مقیاس‌پذیر بر اساس اندازه صفحه
     const getResponsiveConfig = (): ResponsiveConfig => {
@@ -59,13 +57,10 @@ export default function SpaceBackground(){
       return {
         starCount: isMobile ? 100 : isTablet ? 150 : 250,
         moonRadius: isMobile ? 40 : isTablet ? 60 : 80,
-        orbitScale: isMobile ? 0.4 : isTablet ? 0.7 : 1, // ضریب فاصله مدارها
-        planetScale: isMobile ? 0.6 : isTablet ? 0.8 : 1, // ضریب اندازه سیاره‌ها
+        orbitScale: isMobile ? 0.4 : isTablet ? 0.7 : 1,
+        planetScale: isMobile ? 0.6 : isTablet ? 0.8 : 1,
       };
     };
-
-    moonImg.src = "/images/moonlight.png";
-    moonImageRef.current = moonImg;
 
     const createStars = (count: number): void => {
       stars = [];
@@ -140,22 +135,6 @@ export default function SpaceBackground(){
       ctx!.beginPath();
       ctx!.arc(cx, cy, moonRadius, 0, Math.PI * 2);
       ctx!.fill();
-
-      if (moonImg.complete && moonImg.naturalHeight !== 0) {
-        ctx!.save();
-        ctx!.beginPath();
-        ctx!.arc(cx, cy, moonRadius - 2, 0, Math.PI * 2);
-        ctx!.clip();
-        ctx!.globalAlpha = 0.2;
-        ctx!.drawImage(
-          moonImg, 
-          cx - moonRadius, 
-          cy - moonRadius, 
-          moonRadius * 2, 
-          moonRadius * 2
-        );
-        ctx!.restore();
-      }
     };
 
     const animate = (): void => {
