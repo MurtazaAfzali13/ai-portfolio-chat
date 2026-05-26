@@ -15,15 +15,10 @@ interface ContactDetail {
   isLink: boolean;
 }
 
-interface FAQ {
-  question: string;
-  answer: string;
-}
-
 export default function ContactInfo() {
   const socialLinks: SocialLink[] = [
     { name: "GitHub", icon: "🐙", url: "https://github.com/MurtazaAfzali13/" },
-    { name: "LinkedIn", icon: "💼", url: "#" },
+    { name: "LinkedIn", icon: "💼", url: "https://www.linkedin.com/in/murtaza-afzali-484446405/" },
     { name: "Twitter", icon: "🐦", url: "#" },
     { name: "LangChain", icon: "⛓️", url: "#" }
   ];
@@ -50,37 +45,17 @@ export default function ContactInfo() {
       isLink: false
     },
     {
-      icon: "🧠",
-      title: "RAG & LLM Availability",
-      content: "Available for RAG architecture & AI system development",
+      icon: "🤖",
+      title: "Availability",
+      content: "Available for autonomous AI agents & intelligent system development",
       isLink: false
-    }
-  ];
-
-  const faqs: FAQ[] = [
-    {
-      question: "How do you build RAG systems?",
-      answer: "I use LangChain for orchestration, LangGraph for agent workflows, Pinecone as vector database, and FastAPI for backend. The system retrieves relevant context from vector DB and generates accurate responses using LLMs."
-    },
-    {
-      question: "Do you work with international AI projects?",
-      answer: "Absolutely! I work with clients worldwide on RAG-based Q&A systems, semantic search implementations, and LLM-powered applications. I'm comfortable with different time zones."
-    },
-    {
-      question: "What's included in your AI development services?",
-      answer: "I provide end-to-end RAG architecture design, FastAPI backend development, vector database integration (Pinecone), LangChain/LangGraph workflow implementation, and Vercel AI SDK frontend integration."
-    },
-    {
-      question: "How do you handle project revisions for AI systems?",
-      answer: "I include reasonable revisions for prompt engineering, retrieval strategies, and response quality tuning. I believe in iterative development based on user feedback to optimize the RAG pipeline."
     }
   ];
 
   return (
     <div className="space-y-6">
-      {/* Contact Details - AI Specialist */}
       <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">AI & RAG Consultation</h2>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">Agent & AI Consultation</h2>
         <div className="space-y-6">
           {contactDetails.map((detail, index) => (
             <div key={index} className="flex items-start group hover:bg-white/5 p-4 rounded-xl transition-all duration-300">
@@ -103,9 +78,8 @@ export default function ContactInfo() {
         </div>
       </div>
 
-      {/* Social Links - AI Stack */}
       <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">AI Tech Stack & Social</h2>
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">Connect</h2>
         <div className="grid grid-cols-2 gap-4">
           {socialLinks.map((social, index) => (
             <a
@@ -124,12 +98,11 @@ export default function ContactInfo() {
         </div>
       </div>
 
-      {/* Response Time - RAG Projects */}
       <div className="bg-gradient-to-r from-green-500/30 to-blue-600/30 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-        <h3 className="text-2xl font-bold text-white mb-4">RAG Project Inquiries</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">Agent Project Inquiries</h3>
         <p className="text-white/80 leading-relaxed">
-          I typically respond to all AI project inquiries within 24 hours. For urgent RAG implementations
-          or LLM integrations, feel free to mention it in your message and I will prioritize your request.
+          I typically respond within 24 hours. For urgent autonomous agent builds, database-driven
+          workflows, or reflection-agent integrations, mention it in your message and I will prioritize it.
         </p>
       </div>
     </div>

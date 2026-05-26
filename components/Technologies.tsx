@@ -21,9 +21,9 @@ const technologies: Technology[] = [
   { name: "TypeScript", icon: "🔷", color: "#3178C6", level: 80 },
   { name: "Tailwind CSS", icon: "🎨", color: "#06B6D4", level: 95 },
   { name: "FastAPI", icon: "🚀", color: "#009688", level: 75 },
-  { name: "LangChain", icon: "⛓️", color: "#1C3D5A", level: 70 },
-  { name: "Pinecone", icon: "🌲", color: "#4CAF50", level: 65 },
-  { name: "Vercel AI SDK", icon: "🤖", color: "#000000", level: 70 },
+  { name: "LangChain", icon: "⛓️", color: "#1C3D5A", level: 72 },
+  { name: "LangGraph", icon: "🕸️", color: "#6366F1", level: 70 },
+  { name: "Supabase", icon: "🗄️", color: "#3ECF8E", level: 78 },
 ];
 
 const SCROLL_SPEED = 1.2;

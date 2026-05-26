@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase/client';
+import { enrichProjectDescription } from '@/lib/project-copy';
 
 interface ProjectRow {
   id: string;
@@ -37,7 +38,7 @@ export async function GET(): Promise<Response> {
     const projects: Project[] = data.map((row: ProjectRow) => ({
       id: row.id,
       title: row.title,
-      desc: row.description,  // تبدیل description به desc
+      desc: enrichProjectDescription(row.title, row.description),
       tech: row.tech || [],   // JSONB در Supabase خودش آرایه است
       image: row.image,
       liveUrl: row.live_url,  // تبدیل live_url به liveUrl

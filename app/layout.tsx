@@ -1,10 +1,12 @@
 import ChatModal from "@/components/ChatModal";
+import MouseTrail from "@/components/MouseTrail";
 import "./globals.css"
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 export const metadata = {
-  title: "My Portfolio",
-  description: "Personal portfolio built with Next.js and Tailwind",
+  title: "Murtaza Afzali | Autonomous AI Agents & Full-Stack",
+  description:
+    "Full-stack developer building autonomous AI agents, reflection workflows, and database-driven intelligent systems with LangChain, LangGraph, and FastAPI.",
 };
 
 export default function RootLayout({
@@ -17,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <MouseTrail />
         {children}
         {modal}
         <Header />

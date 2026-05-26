@@ -32,7 +32,7 @@ export default function HomePage() {
               <Link href="/image">
                 <Image
                   src="/images/murtaza.jpg"
-                  alt="Murtaza Afzali - AI Engineer"
+                  alt="Murtaza Afzali - AI & Full-Stack Engineer"
                   className="w-full h-full object-cover"
                   width={200}
                   height={200}
@@ -51,14 +51,14 @@ export default function HomePage() {
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
-                AI Engineer & RAG Specialist
+              Full-Stack Developer & AI Engineer
               </span>
             </div>
 
             <p className="text-xl text-white/85 max-w-2xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-              Specializing in RAG Architecture, LLM-powered applications, and semantic search systems.
-              Building intelligent Q&A platforms using LangChain, LangGraph, FastAPI, Pinecone vector database,
-              and Vercel AI SDK.
+              Building autonomous AI agents and intelligent systems with LangChain and LangGraph—agents
+              that make decisions, use reflection loops to improve quality, and query databases to process
+              live data before acting. Full-stack delivery with Next.js, FastAPI, Supabase, and Vercel AI SDK.
             </p>
           </div>
 
@@ -67,13 +67,13 @@ export default function HomePage() {
               href="/projects"
               className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 backdrop-blur-lg border border-white/20 hover:from-blue-600 hover:to-purple-700 transform hover:scale-105"
             >
-              View AI Projects
+              View Projects
             </a>
             <button
               onClick={() => setIsModalOpen(true)}
               className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105 cursor-pointer"
             >
-              Start RAG Project
+              Build an Agent
             </button>
           </div>
         </section>
@@ -89,7 +89,7 @@ export default function HomePage() {
               <div className="text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg">
                 2+
               </div>
-              <div className="text-white font-semibold">Years in AI & RAG</div>
+              <div className="text-white font-semibold">Years Building AI Agents</div>
             </div>
             <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 text-center hover-lift border border-white/20 shadow-xl transition-all duration-300 hover:bg-white/25">
               <div className="text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg">
@@ -109,10 +109,10 @@ export default function HomePage() {
         {/* Call to Action - View Resume */}
         <section className="text-center fade-in px-4">
           <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
-            Ready to Build Your RAG System?
+            Ready for Autonomous AI Agents?
           </h3>
           <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
-            Let's create intelligent semantic search and Q&A experiences!
+            Let&apos;s build decision-making agents, reflection workflows, and database-driven intelligence.
           </p>
           <br />
           <button
