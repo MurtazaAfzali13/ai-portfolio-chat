@@ -14,8 +14,8 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ 
   title, 
-  desc = "",  // مقدار پیش‌فرض اضافه شده
-  tech = [],  // مقدار پیش‌فرض برای tech هم اضافه شد
+  desc = "", 
+  tech = [],  
   liveUrl, 
   githubUrl, 
   image 

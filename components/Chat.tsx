@@ -129,8 +129,6 @@ export default function ChatPage({ onClose }: ChatPageProps) {
           if (done) break;
 
           let chunk = decoder.decode(value, { stream: true });
-
-          // پردازش سیگنال‌های دریافتی از LangGraph
           if (chunk.includes("[[STATUS:RETRIEVE]]")) {
             setAgentStatus({ text: "Querying Pinecone Vector Store...", icon: Search });
             chunk = chunk.replace("[[STATUS:RETRIEVE]]", "");
