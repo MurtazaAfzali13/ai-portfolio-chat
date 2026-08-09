@@ -39,16 +39,16 @@ export default function AboutContent() {
     ]
   };
 
-  const experiences: Experience[] = [
+ const experiences: Experience[] = [
     {
-      period: "2024 - Present",
-      title: "AI & Full-Stack Developer",
+      period: "2026 - Present",
+      title: "Full-Stack & AI Agent Engineer",
       company: "Open-Source & Independent Projects",
       description:
         "Building and experimenting with autonomous AI agents and iterative workflow state machines using LangGraph and LangChain. Developed reflection-based architectures that critique and self-correct outputs, alongside multi-step reasoning graphs that invoke tools dynamically to solve structured problems."
     },
     {
-      period: "2022 - 2024",
+      period: "2024 - 2025",
       title: "Full-Stack Development Foundation",
       company: "Technical Deep Dive & Exploration",
       description:
@@ -115,10 +115,10 @@ export default function AboutContent() {
                 as well as conditional routing mechanisms where agents autonomously determine when to call external tools or fetch data.
               </p>
               <p>
-                For instance, I developed an autonomous research pipeline that accepts a complex domain problem, generates a draft, 
-                invokes specialized tools to gather supporting facts, and continuously revises the answer until a strict stopping 
-                condition is met. I have also engineered self-improving agents utilizing critique nodes to automate structured tasks like content optimization. 
-                Additionally, I explore database-driven workflows where agents securely query and process relational data from 
+                I'm currently building an <strong>Enterprise Multi-Agent Strategy Engine</strong>, where a Supervisor node 
+                delegates tasks to specialized worker agents — a Web Researcher, a Document RAG agent, and a Fact-Checker — 
+                with Human-in-the-Loop checkpoints pausing execution for manual approval before any high-stakes action. 
+                I also explore database-driven workflows where agents securely query and process relational data from 
                 <strong>PostgreSQL and Supabase</strong> to ground their decision-making in real-time information.
               </p>
               <p>

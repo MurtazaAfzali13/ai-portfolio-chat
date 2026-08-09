@@ -123,7 +123,7 @@ export default function ProjectsList() {
             <h2 className="text-3xl font-bold text-white mb-6 text-center">Featured Intelligent System</h2>
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
-                <h3 className="text-2xl font-bold text-yellow-300 mb-4">{featuredProject.title}</h3>
+                <h3 className="text-2xl font-bold text-yellow-300 mb-4">AI-assisted clinical platform (Doctor Copilot)</h3>
                 <p className="text-white/90 leading-relaxed mb-6">
                   {featuredProject.desc}
                 </p>
