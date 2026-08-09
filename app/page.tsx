@@ -9,6 +9,8 @@ import Technologies from "@/components/Technologies";
 import DownloadCV from "@/components/DownloadCV";
 import CVModal from "@/components/CVModal";
 
+
+
 const SpaceBackground = dynamic(
   () => import("@/components/SpaceBackground"),
   { ssr: false }
@@ -51,7 +53,7 @@ export default function HomePage() {
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
-              Full-Stack Developer & AI Engineer
+             Full-Stack Developer & Autonomous AI Agent Engineer
               </span>
             </div>
 
@@ -69,12 +71,15 @@ export default function HomePage() {
             >
               View Projects
             </a>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105 cursor-pointer"
+          
+
+              <Link
+                href="/contact"
+               className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 text-lg font-semibold backdrop-blur-lg bg-black/40 hover:bg-white/90 transform hover:scale-105 cursor-pointer"
             >
-              Build an Agent
-            </button>
+                Build an Agent
+              </Link>
+      
           </div>
         </section>
 
@@ -107,22 +112,21 @@ export default function HomePage() {
         </section>
 
         {/* Call to Action - View Resume */}
-        <section className="text-center fade-in px-4">
-          <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
+        <section className="flex flex-col items-center text-center fade-in px-4">
+          <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl border border-white/20 shadow-2xl">
             Ready for Autonomous AI Agents?
           </h3>
-          <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
+          <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl border border-white/20">
             Let&apos;s build decision-making agents, reflection workflows, and database-driven intelligence.
           </p>
-          <br />
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
+            className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
           >
             📄 View Resume
           </button>
         </section>
-        
+
         <div className="m-4 cursor-pointer">
           <DownloadCV />
         </div>

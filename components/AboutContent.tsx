@@ -87,7 +87,7 @@ export default function AboutContent() {
 
           <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
             <span className="pulse-slow font-semibold drop-shadow-lg">
-              AI Engineer | Autonomous Agents • LangGraph • FastAPI
+              Full-Stack Developer & Autonomous AI Agent Engineer
             </span>
           </div>
 

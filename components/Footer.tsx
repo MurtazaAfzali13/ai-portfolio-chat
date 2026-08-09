@@ -21,7 +21,7 @@ export default function Footer() {
               Murtaza <span className="text-yellow-300">Afzali</span>
             </h3>
             <p className="text-white/80 leading-relaxed text-lg">
-              AI & Full-Stack Engineer building autonomous agents and intelligent systems with
+              Full-Stack Developer & Autonomous AI Agent Engineer building autonomous agents and intelligent systems with
               LangChain, LangGraph, and FastAPI—decision-making, reflection workflows, and
               database-driven automation with Next.js and Vercel AI SDK.
             </p>
