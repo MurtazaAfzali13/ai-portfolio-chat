@@ -83,15 +83,17 @@ export default function ContactPage() {
               </div>
             </div>
           </section>
-
           <section className="text-center fade-in">
-            <h3 className="text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl inline-block border border-white/20 shadow-2xl">
+            <h3 className="w-fit mx-auto text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl border border-white/20 shadow-2xl">
               Explore Intelligent Systems
             </h3>
+
             <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
               See autonomous agents, reflection workflows, and full-stack case studies.
             </p>
+
             <br />
+
             <a
               href="/projects"
               className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
