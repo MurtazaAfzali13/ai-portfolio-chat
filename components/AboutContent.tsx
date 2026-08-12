@@ -213,7 +213,7 @@ export default function AboutContent() {
               Let&apos;s check the full codebases.
             </p>
             <a
-              href="https://github.com/MurtazaAfzali13"
+              href="https://github.com/MurtazaAfzali13?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-green-600 hover:to-blue-700 transform hover:scale-105"
