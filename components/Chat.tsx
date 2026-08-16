@@ -12,24 +12,14 @@ type Message = {
 
 const NEAR_BOTTOM_PX = 72;
 
-const isRTL = (text: string): boolean => {
-  const rtlRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
-  return rtlRegex.test(text);
-};
-
-const getTextDirection = (text: string): "rtl" | "ltr" => {
-  return isRTL(text) ? "rtl" : "ltr";
-};
-
-// کامپوننت حباب پیام (Message Bubble) با استایل جدید
+// کامپوننت حباب پیام (Message Bubble) با استایل جدید - اجبار به چپ‌چین
 const MessageBubble = ({ content, isUser }: { content: string; isUser: boolean }) => {
-  const textDir = getTextDirection(content);
   return (
     <div
       className={`relative group max-w-[85%] sm:max-w-[75%] px-5 py-3.5 shadow-sm transition-all duration-300 ${
         isUser
           ? "bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl rounded-tr-sm ml-auto"
-          : "bg-slate-800/80 backdrop-blur-md text-slate-100 border border-slate-700/50 rounded-2xl rounded-tl-sm"
+          : "bg-slate-800/80 backdrop-blur-md text-slate-100 border border-slate-700/50 rounded-2xl rounded-tl-sm mr-auto"
       }`}
     >
       {/* افکت Glow ملایم برای پیام هوش مصنوعی */}
@@ -38,9 +28,8 @@ const MessageBubble = ({ content, isUser }: { content: string; isUser: boolean }
       )}
       
       <p
-        className="relative whitespace-pre-wrap break-words text-[15px] leading-relaxed"
-        dir={textDir}
-        style={{ textAlign: textDir === "rtl" ? "right" : "left" }}
+        className="relative whitespace-pre-wrap break-words text-[15px] leading-relaxed text-left"
+        dir="ltr"
       >
         {content}
       </p>
@@ -70,7 +59,7 @@ export default function ChatPage({ onClose }: ChatPageProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const pinnedToBottomRef = useRef(true);
 
-  // منطق اسکرول هوشمند
+  // منطق تشخیص فاصله از پایین
   const updatePinnedToBottom = useCallback(() => {
     const el = messagesScrollRef.current;
     if (!el) return;
@@ -78,14 +67,11 @@ export default function ChatPage({ onClose }: ChatPageProps) {
     pinnedToBottomRef.current = distanceFromBottom < NEAR_BOTTOM_PX;
   }, []);
 
-  const scrollMessagesToBottom = useCallback((behavior: ScrollBehavior) => {
-    messagesEndRef.current?.scrollIntoView({ block: "end", behavior });
-  }, []);
-
   useEffect(() => {
-    updatePinnedToBottom();
-    if (pinnedToBottomRef.current) scrollMessagesToBottom("smooth");
-  }, [messages, streamingContent, updatePinnedToBottom, scrollMessagesToBottom]);
+    if (pinnedToBottomRef.current) {
+      messagesEndRef.current?.scrollIntoView({ block: "end", behavior: "auto" });
+    }
+  }, [messages, streamingContent]);
 
   // تمرکز روی اینپوت در هنگام بارگذاری
   useEffect(() => {
@@ -95,19 +81,19 @@ export default function ChatPage({ onClose }: ChatPageProps) {
   const handleSubmit = async () => {
     if (!input.trim() || isLoading) return;
 
+    pinnedToBottomRef.current = true;
+
     const userMessage: Message = { id: crypto.randomUUID(), role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
     setStreamingContent("");
     
-    // وضعیت اولیه گراف
     setAgentStatus({ text: "Initializing LangGraph workflow...", icon: Zap });
     
     abortControllerRef.current = new AbortController();
 
     try {
-      // فراخوانی API route (Next.js) که به FastAPI متصل است
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -162,7 +148,6 @@ export default function ChatPage({ onClose }: ChatPageProps) {
       setIsLoading(false);
       setStreamingContent("");
       abortControllerRef.current = null;
-      // پس از پایان پاسخ، دوباره روی ورودی فوکوس می‌کنیم
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   };
@@ -191,9 +176,7 @@ export default function ChatPage({ onClose }: ChatPageProps) {
       <div className="relative z-10 flex shrink-0 justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-700/50 bg-slate-900/60 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-lg shadow-blue-500/20">
-            {/* <MessageSquare className="w-5 h-5 text-white" /> */}
             <Image src="/images/murtaza.jpg" width={42} height={42} alt="Murtaza AI Agent" className="rounded-full" />
-            
           </div>
           <div>
             <h2 className="text-lg font-semibold text-white tracking-tight">
@@ -215,7 +198,6 @@ export default function ChatPage({ onClose }: ChatPageProps) {
           </button>
         )}
       </div>
-
 
       <div
         ref={messagesScrollRef}
@@ -242,11 +224,11 @@ export default function ChatPage({ onClose }: ChatPageProps) {
           </div>
         ))}
 
-        {/* حباب استریم زنده */}
+        {/* حباب استریم زنده - اجبار به چپ‌چین */}
         {streamingContent && (
           <div className="flex flex-col w-full">
-            <div className="relative max-w-[85%] sm:max-w-[75%] px-5 py-3.5 bg-slate-800/80 backdrop-blur-md text-slate-100 border border-slate-700/50 rounded-2xl rounded-tl-sm shadow-sm">
-              <p className="whitespace-pre-wrap break-words text-[14px] sm:text-[15px] leading-relaxed" dir={getTextDirection(streamingContent)}>
+            <div className="relative mr-auto max-w-[85%] sm:max-w-[75%] px-5 py-3.5 bg-slate-800/80 backdrop-blur-md text-slate-100 border border-slate-700/50 rounded-2xl rounded-tl-sm shadow-sm">
+              <p className="whitespace-pre-wrap break-words text-[14px] sm:text-[15px] leading-relaxed text-left" dir="ltr">
                 {streamingContent}
                 <span className="inline-block w-1.5 h-4 bg-blue-500 ml-1.5 animate-pulse rounded-sm align-middle" />
               </p>
@@ -276,7 +258,7 @@ export default function ChatPage({ onClose }: ChatPageProps) {
         <div ref={messagesEndRef} className="h-1" />
       </div>
 
-      {/* ناحیه ورود متن (Input Area) */}
+      {/* ناحیه ورود متن (Input Area) - اجبار به چپ‌چین */}
       <div className="relative z-10 shrink-0 px-3 sm:px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-slate-900/80 backdrop-blur-xl border-t border-slate-700/50">
         <div className="relative flex items-end gap-2 bg-slate-800/50 rounded-2xl border border-slate-700/50 ring-1 ring-white/5 transition-all focus-within:ring-blue-500/50 focus-within:border-blue-500/50 shadow-inner">
           <textarea
@@ -288,9 +270,9 @@ export default function ChatPage({ onClose }: ChatPageProps) {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Ask about my skills or projects..."
-            className="w-full max-h-28 min-h-[44px] py-3 pl-4 pr-12 bg-transparent text-slate-100 placeholder:text-slate-500 text-[14px] sm:text-[15px] resize-none outline-none scrollbar-thin scrollbar-thumb-slate-600"
+            className="w-full max-h-28 min-h-[44px] py-3 pl-4 pr-12 bg-transparent text-slate-100 placeholder:text-slate-500 text-[14px] sm:text-[15px] resize-none outline-none scrollbar-thin scrollbar-thumb-slate-600 text-left"
             rows={1}
-            dir="auto"
+            dir="ltr"
           />
           
           <div className="absolute right-1.5 bottom-1.5 flex items-center">
@@ -318,7 +300,6 @@ export default function ChatPage({ onClose }: ChatPageProps) {
           </div>
         </div>
         
-        {/* راهنمای کوچک (اسپیس‌های اضافی حذف شدند) */}
         <div className="text-center mt-1.5 sm:mt-2">
           <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-wide">
             Powered by LangGraph & Pinecone
