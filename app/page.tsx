@@ -33,7 +33,7 @@ export default function HomePage() {
             <div className="w-60 h-60 mb-6 rounded-full overflow-hidden border-4 border-yellow-300 shadow-2xl backdrop-blur-lg bg-white/20">
               <Link href="/image">
                 <Image
-                  src="/images/murtaza.jpg"
+                  src="/images/murtazaafzali.png"
                   alt="Murtaza Afzali - AI & Full-Stack Engineer"
                   className="w-full h-full object-cover"
                   width={200}
