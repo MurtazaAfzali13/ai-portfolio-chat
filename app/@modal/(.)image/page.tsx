@@ -35,7 +35,7 @@ export default function ImageModalPage() {
         {/* Image container */}
         <div className="p-4">
           <Image
-            src="/images/murtaza.jpg"
+            src="/images/murtazaafzali.png"
             alt="Murtaza Afzali"
             width={400}
             height={400}
