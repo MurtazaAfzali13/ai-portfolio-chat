@@ -10,27 +10,136 @@ interface FAQ {
   answer: string;
 }
 
+interface Offer {
+  icon: string;
+  title: string;
+  subtitle: string;
+  points: string[];
+}
+
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface Package {
+  name: string;
+  tag: string;
+  description: string;
+  recommended?: boolean;
+}
+
 export default function ContactPage() {
+  const offers: Offer[] = [
+    {
+      icon: "🎬",
+      title: "VidBrain-Style Video Intelligence",
+      subtitle: "Make your videos, courses, or training library searchable",
+      points: [
+        "Timestamped answers with clickable [MM:SS] citations",
+        "Small-to-Big retrieval: precise search, rich context",
+        "Evidence gate that refuses to guess, plus a labeled web fallback",
+        "Single-flight indexing so no video is embedded twice",
+        "Per-user tenant isolation and a monitoring dashboard"
+      ]
+    },
+    {
+      icon: "🍽️",
+      title: "Restaurant & Hospitality AI Agent",
+      subtitle: "Autonomous ordering and reservations you can trust",
+      points: [
+        "Prices read live from your database, never guessed",
+        "Human-in-the-Loop checkout: orders are placed only after the user clicks Confirm",
+        "Anti-race-condition guard that re-checks the live cart total on resume",
+        "Visual UI cards (meal images, receipts) without bloating the LLM context",
+        "Cart icon on your website updates instantly when the agent adds an item"
+      ]
+    }
+  ];
+
+  const steps: Step[] = [
+    {
+      title: "Share your use case",
+      description: "Tell me your use case and content type, such as videos, courses, menus, or bookings."
+    },
+    {
+      title: "Agree on scope and package",
+      description: "We choose the right package together before any work starts."
+    },
+    {
+      title: "Build and demo on your data",
+      description: "You see the system working on your own content, not a generic sample."
+    },
+    {
+      title: "Review and revisions",
+      description: "You review the demo and I apply revisions."
+    },
+    {
+      title: "Handover with documentation",
+      description: "Source code, setup guides, and an architecture walkthrough."
+    }
+  ];
+
+  const deliverables: string[] = [
+    "FastAPI and LangGraph backend source code",
+    "Next.js frontend source code",
+    "Database and vector index setup guide",
+    "Environment and deployment guide",
+    "Architecture walkthrough"
+  ];
+
+  const packages: Package[] = [
+    {
+      name: "Informational AI Agent",
+      tag: "Standard Integration",
+      description:
+        "A conversational agent on your business data for FAQs, menu explanations, and general guidance, with context memory."
+    },
+    {
+      name: "Read/Write Database Agent",
+      tag: "Advanced Operations",
+      description:
+        "Adds tool-calling: the agent reads tables (room availability, active cart items) and performs non-critical modifications securely."
+    },
+    {
+      name: "Full Agentic Workflow",
+      tag: "Enterprise Production",
+      description:
+        "The complete architecture: Human-in-the-Loop checkpoints, artifact UI generation, anti-race-condition guards, and payment state interruptions.",
+      recommended: true
+    }
+  ];
+
   const faqs: FAQ[] = [
     {
-      question: "How long does an autonomous agent project take?",
+      question: "How do you stop the AI from hallucinating?",
       answer:
-        "Timelines depend on complexity. A focused agent with a few tools and a reflection loop often takes 2–4 weeks; full database-driven autonomous workflows with multiple LangGraph nodes can take 4–8 weeks. I provide a sprint plan after scoping your data and decisions."
+        "In VidBrain, an evidence gate grades every retrieved passage and fails closed: no evidence, no guess. Citations are built from retrieved data, and timestamps snap to real transcript markers. In the restaurant agent, prices and totals come from backend tools that read the live database."
     },
     {
-      question: "Can agents query my database and use real table data?",
+      question: "What is Small-to-Big retrieval and why does it matter?",
       answer:
-        "Yes. I build database-driven autonomous workflows where agents run structured queries against PostgreSQL/Supabase (or your API), process rows from entire tables, aggregate results, and only then decide the next action—grounding outputs in live business data."
+        "Small chunks are embedded for precise search. After a match, the larger parent passage is fetched from the database, so the model reads rich context while search stays accurate. You get better answers without sacrificing precision."
     },
     {
-      question: "What is a Reflection Agent?",
+      question: "Can the agent place orders or bookings on its own?",
       answer:
-        "A reflection agent reviews its own draft output, scores quality, and revises before the user sees the final answer. This improves accuracy for reports, recommendations, and multi-step tasks without manual re-prompting."
+        "Not for high-risk actions. Checkout and room-booking nodes pause the graph and show a visual card. The transaction runs only after the user clicks Confirm, and the live cart total is re-checked before it executes."
     },
     {
-      question: "What's included in your development services?",
+      question: "What does a failure look like in production?",
       answer:
-        "LangChain/LangGraph agent design, FastAPI services, database integration, decision-making and reflection nodes, Next.js UI with Vercel AI SDK streaming, testing, deployment, and documentation. Vector retrieval can be added when document search is required."
+        "Transient faults such as timeouts retry with backoff, and permanent ones fail fast. State is checkpointed, so a failed run resumes from the step that failed. If the database drops, tools return a graceful error and the agent apologizes without losing the conversation."
+    },
+    {
+      question: "Who owns the accounts and API costs?",
+      answer:
+        "You do. AI provider, vector index, and database accounts are yours, and usage is billed to them. Plan and usage limits protect your API budget."
+    },
+    {
+      question: "Can it handle heavy concurrent traffic?",
+      answer:
+        "A request queue for heavy concurrent traffic is not included by default and is scoped separately. Answer quality for video projects also depends on the quality of the source transcript."
     }
   ];
 
@@ -39,26 +148,56 @@ export default function ContactPage() {
       <SpaceBackground />
 
       <div className="relative z-10 w-full">
+        {/* HERO */}
         <section className="fade-in mb-16 px-4">
           <div className="mb-8 flex flex-col items-center">
             <h1 className="text-6xl md:text-7xl font-bold mb-6 text-white text-center drop-shadow-2xl">
-              Start Your <span className="text-yellow-300 glow-text">Agent Project</span>
+              Build Your <span className="text-yellow-300 glow-text">Grounded AI</span>
             </h1>
 
             <div className="text-2xl md:text-3xl text-white/95 mb-4 slide-in-left text-center">
               <span className="pulse-slow font-semibold drop-shadow-lg">
-                Autonomous AI Agents & Intelligent Systems
+                Multi-Agent RAG Systems That Refuse to Guess
               </span>
             </div>
 
             <p className="text-xl text-white/85 max-w-2xl mx-auto slide-in-right text-center backdrop-blur-lg bg-black/40 p-6 rounded-2xl border border-white/20 shadow-2xl">
-              Ready for agents that decide, reflect, and work with your database? Let&apos;s map your
-              AI decision-making framework and ship a production-ready intelligent system.
+              Have videos, courses, or a training library to make searchable? Running a restaurant
+              or hotel that needs a trustworthy ordering agent? Message me your use case before
+              ordering, and I will recommend the right scope.
             </p>
           </div>
         </section>
 
         <div className="max-w-6xl mx-auto px-4">
+          {/* WHAT I BUILD */}
+          <section className="fade-in mb-16">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">What I Can Build for You</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {offers.map((offer) => (
+                  <div
+                    key={offer.title}
+                    className="text-left bg-black/30 rounded-xl p-6 border border-white/10 hover:border-yellow-300/50 transition-colors duration-300"
+                  >
+                    <div className="text-4xl mb-3">{offer.icon}</div>
+                    <h3 className="text-2xl font-semibold text-yellow-300 mb-1">{offer.title}</h3>
+                    <p className="text-white/80 mb-4">{offer.subtitle}</p>
+                    <ul className="space-y-2 text-white/85">
+                      {offer.points.map((point) => (
+                        <li key={point} className="flex items-start">
+                          <span className="w-2 h-2 bg-yellow-300 rounded-full mt-2 mr-3 shrink-0"></span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FORM + INFO */}
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <ContactForm />
             <div className="slide-in-right">
@@ -66,12 +205,77 @@ export default function ContactPage() {
             </div>
           </div>
 
+          {/* PROCESS */}
+          <section className="slide-in-left mb-16">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">How a Project Runs</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+                {steps.map((step, index) => (
+                  <div
+                    key={step.title}
+                    className="bg-black/30 rounded-xl p-5 border border-white/10"
+                  >
+                    <div className="text-yellow-300 font-bold text-lg mb-2">
+                      {index + 1}. {step.title}
+                    </div>
+                    <p className="text-white/75 text-sm">{step.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 bg-black/30 rounded-xl p-6 border border-white/10 text-left">
+                <h3 className="text-xl font-semibold text-yellow-300 mb-3">What you get</h3>
+                <ul className="grid md:grid-cols-2 gap-2 text-white/85">
+                  {deliverables.map((item) => (
+                    <li key={item} className="flex items-start">
+                      <span className="w-2 h-2 bg-yellow-300 rounded-full mt-2 mr-3 shrink-0"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* PACKAGES */}
+          <section className="slide-in-right mb-16">
+            <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
+              <h2 className="text-3xl font-bold text-white mb-3 text-center">Integration Packages</h2>
+              <p className="text-white/80 text-center mb-8 text-lg">
+                Deployed as a headless backend API, ready for your React, Next.js, or Flutter app.
+              </p>
+              <div className="grid md:grid-cols-3 gap-6">
+                {packages.map((pkg) => (
+                  <div
+                    key={pkg.name}
+                    className={`text-left rounded-xl p-6 border transition-colors duration-300 ${
+                      pkg.recommended
+                        ? "bg-black/40 border-yellow-300/60"
+                        : "bg-black/30 border-white/10 hover:border-white/30"
+                    }`}
+                  >
+                    <div className="text-sm text-white/60 mb-1">
+                      {pkg.tag}
+                      {pkg.recommended ? " · Recommended" : ""}
+                    </div>
+                    <h3 className="text-xl font-semibold text-yellow-300 mb-3">{pkg.name}</h3>
+                    <p className="text-white/80">{pkg.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ */}
           <section className="fade-in mb-16">
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-              <h2 className="text-3xl font-bold text-white mb-8 text-center">Intelligent Systems FAQs</h2>
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">Questions Clients Ask</h2>
               <div className="grid md:grid-cols-2 gap-8">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="group hover:bg-white/5 p-6 rounded-xl transition-all duration-300">
+                {faqs.map((faq) => (
+                  <div
+                    key={faq.question}
+                    className="group hover:bg-white/5 p-6 rounded-xl transition-all duration-300 text-left"
+                  >
                     <h3 className="text-xl font-semibold text-yellow-300 mb-3 group-hover:text-yellow-200 transition-colors duration-300">
                       {faq.question}
                     </h3>
@@ -83,13 +287,15 @@ export default function ContactPage() {
               </div>
             </div>
           </section>
-          <section className="text-center fade-in">
+
+          {/* CTA */}
+          <section className="text-center fade-in mb-16">
             <h3 className="w-fit mx-auto text-2xl font-bold text-white mb-4 backdrop-blur-lg bg-black/40 p-4 rounded-2xl border border-white/20 shadow-2xl">
-              Explore Intelligent Systems
+              See VidBrain and the Restaurant Agent in Detail
             </h3>
 
             <p className="text-white/80 mb-6 backdrop-blur-lg bg-black/40 p-3 rounded-xl inline-block border border-white/20">
-              See autonomous agents, reflection workflows, and full-stack case studies.
+              Architecture breakdowns, pipeline nodes, and the engineering behind each project.
             </p>
 
             <br />
@@ -148,6 +354,13 @@ export default function ContactPage() {
           }
           to {
             opacity: 1;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .slide-in-left,
+          .slide-in-right,
+          .fade-in {
+            animation: none;
           }
         }
       `}</style>
