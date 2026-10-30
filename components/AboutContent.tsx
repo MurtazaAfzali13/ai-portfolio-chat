@@ -189,7 +189,17 @@ export default function AboutContent() {
                 Most AI chatbots answer from memory when they lack evidence, which means
                 hallucinations. I design the opposite: systems with an evidence gate, verified
                 citations, and honest fallbacks. VidBrain is the clearest example of how I think
-                about that problem.
+                about that problem, and my Restaurant &amp; Hospitality Agent applies the same
+                discipline to live orders and bookings, with a{" "}
+                <a
+                  href="https://autonomous-restaurant-agent.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yellow-300 underline hover:text-yellow-200"
+                >
+                  live demo you can try
+                </a>
+                .
               </p>
             </div>
           </div>
@@ -364,39 +374,84 @@ export default function AboutContent() {
           </div>
         </section>
 
-        {/* SECOND PROJECT */}
+        {/* RESTAURANT AGENT */}
         <section className="mb-16 slide-in-right">
-          <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-4 text-center">
-              Also Built: Enterprise Restaurant &amp; Hospitality Agent
-            </h2>
-            <p className="text-white/85 text-lg text-center max-w-3xl mx-auto mb-6">
-              The same principle applied to transactions. A state-based agent that never guesses
-              prices, reading live carts and totals from the database through secure backend
-              tools.
+          <div className="bg-gradient-to-r from-green-500/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl">
+            <div className="text-center mb-8">
+              <div className="text-white/70 mb-2">Also built</div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Enterprise <span className="text-yellow-300 glow-text">Restaurant &amp; Hospitality</span> Agent
+              </h2>
+              <p className="text-white/85 text-lg max-w-3xl mx-auto">
+                The same principle applied to transactions. A state-based agent for autonomous
+                ordering and reservations that never guesses prices: it reads live carts and
+                totals from the database through secure backend tools, and every order is
+                verified by the user before any database write.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 text-white/85 mb-8">
+              {[
+                {
+                  title: "Human-in-the-Loop",
+                  text: "The graph pauses at checkout and room-booking nodes and shows a visual card. Orders are placed only after the user clicks Confirm."
+                },
+                {
+                  title: "Anti-Race-Condition",
+                  text: "If the cart changed in another tab during the pause, the live total is recalculated on resume and the transaction is rejected."
+                },
+                {
+                  title: "Secure by Design",
+                  text: "Dependency injection keeps raw user IDs away from the model, and authentication is handled entirely by the backend."
+                },
+                {
+                  title: "State Injection",
+                  text: "Live cart and reservation snapshots are injected into the system prompt at every turn, so the agent works from truth, not memory."
+                },
+                {
+                  title: "UI Artifacts",
+                  text: "Meal images and receipts render as visual cards from backend metadata, without polluting the LLM context window."
+                },
+                {
+                  title: "Live Database Sync",
+                  text: "Add an item in chat and the website’s cart icon updates instantly. Tools run one at a time to prevent race conditions."
+                }
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="bg-black/30 rounded-xl p-5 border border-white/10 text-left hover:border-yellow-300/50 transition-colors duration-300"
+                >
+                  <strong className="text-yellow-300">{item.title}</strong>
+                  <p className="mt-2 text-white/75">{item.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-white/70 text-center mb-6">
+              Fail-fast error handling keeps the conversation alive if the database drops, and
+              context trimming keeps token costs flat on long chats.
             </p>
-            <div className="grid md:grid-cols-3 gap-4 text-white/85">
-              <div className="bg-black/30 rounded-xl p-5 border border-white/10">
-                <strong className="text-yellow-300">Human-in-the-Loop</strong>
-                <p className="mt-2 text-white/75">
-                  The graph pauses at checkout and booking nodes. Orders are placed only after
-                  the user clicks Confirm.
-                </p>
-              </div>
-              <div className="bg-black/30 rounded-xl p-5 border border-white/10">
-                <strong className="text-yellow-300">Anti-Race-Condition</strong>
-                <p className="mt-2 text-white/75">
-                  On resume, the live cart total is recalculated, and the transaction is
-                  rejected if it changed.
-                </p>
-              </div>
-              <div className="bg-black/30 rounded-xl p-5 border border-white/10">
-                <strong className="text-yellow-300">Secure by Design</strong>
-                <p className="mt-2 text-white/75">
-                  Dependency injection keeps raw user IDs away from the model, and context
-                  trimming keeps token costs flat.
-                </p>
-              </div>
+
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {["LangGraph", "Next.js", "Supabase", "Vercel"].map((t) => (
+                <span
+                  key={t}
+                  className="bg-white/15 text-white px-4 py-2 rounded-full border border-white/20 font-medium"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex justify-center">
+              <a
+                href="https://autonomous-restaurant-agent.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full shadow-2xl hover-lift text-lg font-semibold transition-all duration-300 inline-block backdrop-blur-lg border border-white/20 hover:from-blue-600 hover:to-purple-700 transform hover:scale-105"
+              >
+                🍽️ Try the Live Demo
+              </a>
             </div>
           </div>
         </section>
