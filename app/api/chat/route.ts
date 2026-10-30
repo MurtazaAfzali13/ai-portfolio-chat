@@ -1,5 +1,4 @@
-// 🔥 این خط برای ورسل بی‌نهایت مهم است!
-// باعث می‌شود محدودیت زمانی ۱۰ ثانیه‌ای ورسل برای استریم‌ها برداشته شود
+
 export const runtime = "edge"; 
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
