@@ -1,19 +1,6 @@
 @import "tailwindcss";
 
-.mouse-trail-dot {
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 35%,
-    rgba(250, 204, 21, 0.95) 0%,
-    rgba(96, 165, 250, 0.85) 45%,
-    rgba(167, 139, 250, 0.5) 100%
-  );
-  box-shadow:
-    0 0 12px rgba(96, 165, 250, 0.55),
-    0 0 24px rgba(167, 139, 250, 0.35),
-    0 0 40px rgba(250, 204, 21, 0.15);
-  mix-blend-mode: screen;
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   .mouse-trail-dot {
@@ -143,5 +130,21 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Static fallback that matches the canvas sky, so no white flash while JS loads */
+html {
+  background: #0a0624 linear-gradient(180deg, #03030f 0%, #120a3a 55%, #2d1b69 100%) fixed;
+  min-height: 100%;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+    background: transparent;
   }
 }
